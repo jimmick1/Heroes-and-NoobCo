@@ -57,6 +57,8 @@ namespace Heroes_and_NoobCo
         internal int agility;
         internal int health;
         internal int intellect;
+        internal Weapon? weapon;
+        internal int cast;
         
         internal virtual int Power { get => power; set => power = value; }
         internal virtual int Health { get => health; set => health = value; }
@@ -70,7 +72,10 @@ namespace Heroes_and_NoobCo
         internal virtual int Armor { get => (int)Agility / 2; set => Agility = value; }
         internal virtual int MageArmor { get => (int)Intellect / 2; set => Intellect = value; }
         
-        internal Weapon? weapon;
+        internal virtual Weapon Weapon { get => weapon; set => weapon = value; }
+        internal int Cast { get => cast + Intellect; set => cast = value; }
+        internal int currenthealth;
+        internal int currentmana;
         public Hero (int power, int agility, int health, int intellect, string name)
         {
             this.Power = power;
@@ -82,6 +87,9 @@ namespace Heroes_and_NoobCo
             this.Mana = this.Intellect;
             this.Armor = this.Agility;
             this.MageArmor = this.Intellect;
+            this.Cast = 10;
+            this.currenthealth = this.HealthRate;
+            this.currentmana = this.Mana;
         }
     }
     class Knight : Hero
@@ -89,22 +97,22 @@ namespace Heroes_and_NoobCo
         internal override int HealthRate { get => base.HealthRate + 15;}
         internal override int Power  { get => base.Power + 2;}
         internal override int Armor { get => base.Armor + 2;}
-        Weapon KnightWeapon = new Sword();
+        internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Sword(); }
 
         public Knight(int power, int agility, int health, int intellect, string name) :
             base(power, agility, health, intellect, name)
         {
-            KnightWeapon.FullDamage = power;
+            Weapon.FullDamage = Power;
         }
     }
     class Thief : Hero
     {
         internal override int Agility { get => base.Agility + 2;}
-        Weapon ThiefWeapon = new Dagger();
+        internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Dagger(); }
         public Thief(int power, int agility, int health, int intellect, string name) :
             base(power, agility, health, intellect, name)
         {           
-            ThiefWeapon.FullDamage = agility;
+            Weapon.FullDamage = Agility;
         }
     }
     class Mage : Hero
@@ -112,16 +120,11 @@ namespace Heroes_and_NoobCo
         internal override int Intellect { get => base.Intellect + 5;}
         internal override int Mana { get => base.Mana + 25;}
         internal override int MageArmor { get => base.MageArmor + 2;}
-        Weapon MageWeapon = new Staff();
+        internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Staff(); }
         public Mage(int power, int agility, int health, int intellect, string name) :
             base(power, agility, health, intellect, name)
         {
-            MageWeapon.FullDamage = intellect;
-            Weapon Cast = new Cast();
-            if (MageWeapon != null)
-            {
-                Cast.basedamage += 10;
-            }
+            Weapon.FullDamage = Intellect;
         }
     }
 }
