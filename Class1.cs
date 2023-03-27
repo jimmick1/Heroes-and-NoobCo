@@ -96,6 +96,16 @@ namespace Heroes_and_NoobCo
     class Knight : Hero
     {
         internal override int HealthRate { get => (int)health * 4 + 15; set => health = value; }
+        internal override int HealthRate { get => base.HealthRate + 15;}
+        internal override int Power  { get => base.Power + 2;}
+        internal override int Armor { get => base.Armor + 2;}
+=========
+        internal override int HealthRate { get => (int)Health * 4 + 15; set => Health = value; }
+        internal override int HealthRate { get => base.HealthRate + 15;}
+        internal override int Power  { get => base.Power + 2;}
+        internal override int Armor { get => base.Armor + 2;}
+=========
+        internal override int HealthRate { get => (int)Health * 4 + 15; set => Health = value; }
         internal override int Power  { get => power + 2; set => power = value; }
         internal override int Armor { get => ((int)agility / 2) + 2; set => agility = value; }
         internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Sword(); }
