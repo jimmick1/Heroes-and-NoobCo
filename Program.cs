@@ -307,6 +307,24 @@ namespace Heroes_and_NoobCo
                 }
             }            
         }
+        private static int ClearDamage (Hero atacker, Hero defender)
+        {
+            int damage = 0;
+            if (atacker is Mage && atacker.Mana >=40)
+            {
+                damage = atacker.Cast - (defender.MageArmor + defender.Intellect);
+                atacker.Mana -= 40;
+            }
+            else
+            {
+                damage = atacker.weapon.FullDamage - (defender.Armor + defender.Agility);
+            }
+            return damage;
+        }
+        private static void Shot (Hero atacker, Hero defender)
+        {
+            defender.currenthealth -= ClearDamage(atacker, defender);
+        }
     }
 }
 
