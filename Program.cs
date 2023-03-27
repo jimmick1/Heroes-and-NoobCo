@@ -156,17 +156,9 @@ namespace Heroes_and_NoobCo
                     Console.WriteLine("{0} {1} is defeated!", ReturnType(defender), defender.Name);
                 }
             }
-            for (int i = 0; i < defenders.Count; i++)
-            {
-                if (defenders[i].currenthealth == 0)
-                {
-                    defenders.RemoveAt(i);
-                    i--;
-                }
-            }
             atacker.currentmana -= 40;
         }
-        private static void Shot (Hero atacker, Hero defender, int flag)
+        private static void Shot (Hero atacker, Hero defender, ref bool flag)
         {
             defender.currenthealth -= ClearDamage(atacker, defender);
             if (defender.currenthealth < 0)
@@ -180,7 +172,7 @@ namespace Heroes_and_NoobCo
             if (defender.currenthealth == 0)
             {
                 Console.WriteLine("{0} {1} is defeated!", ReturnType(defender), defender.Name);
-                flag = 1;
+                flag = true;
             }
         }
         private static int ReturnTargetIndex (List<Hero> fighters)
@@ -194,7 +186,7 @@ namespace Heroes_and_NoobCo
         }
         private static void HeroesKick (ref List<Hero> heroes, ref List<Hero> enemies)
         {
-            int flag = 0;
+            bool flag = false;
             foreach (Hero hero in heroes)
             {
                 if (enemies.Count == 0)
@@ -204,12 +196,20 @@ namespace Heroes_and_NoobCo
                 var targetindex = ReturnTargetIndex(enemies);
                 if (hero is Mage && hero.currentmana >= 40)
                 {
-                    MagicCast(hero, enemies);                    
+                    MagicCast(hero, enemies);
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        if (enemies[i].currenthealth == 0)
+                        {
+                            enemies.RemoveAt(i);
+                            i--;
+                        }
+                    }
                 }
                 else
                 {
-                    Shot(hero, enemies[targetindex], flag);
-                    if (flag == 1)
+                    Shot(hero, enemies[targetindex], ref flag);
+                    if (flag)
                     {
                         enemies.RemoveAt(targetindex);
                     }                    
@@ -238,7 +238,7 @@ namespace Heroes_and_NoobCo
                     stringBuilder.Append(ReturnType(heroes[i]) + " " + heroes[i].Name + ", ");
                 }
                 stringBuilder.Append(ReturnType(heroes[heroes.Count - 1]) + " " + heroes[heroes.Count - 1].Name + " ");
-                defeatcase = "Unfortunately our heroes was brave, yet not enough skilled, or just lack of luck.";
+                defeatcase = "Unfortunately our heroes were brave, yet not enough skilled, or just lack of luck.";
             }
             stringBuilder.Append("got order to eliminate the ");
             if (enemies.Count == 1)
@@ -292,14 +292,6 @@ namespace Heroes_and_NoobCo
                     break;
                 }
                 HeroesKick(ref enemies, ref heroes);
-                for (int i = 0; i < heroes.Count; i++)
-                {
-                    if (heroes[i].currenthealth == 0)
-                    {
-                        heroes.RemoveAt(i);
-                        i--;
-                    }
-                }
                 if (heroes.Count == 0)
                 {
                     Console.WriteLine(defeatcase);

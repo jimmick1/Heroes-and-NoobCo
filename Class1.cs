@@ -66,8 +66,8 @@ namespace Heroes_and_NoobCo
         internal virtual int Agility { get => agility; set => agility = value; }
         internal virtual int Intellect { get => intellect; set => intellect = value; }
 
-        internal virtual int HealthRate { get => (int)Health * 4; set => Health = value; }
-        internal virtual int Mana { get => (int)Intellect * 4;  set => Intellect = value; }
+        internal virtual int HealthRate { get => (int)health * 4; set => health = value; }
+        internal virtual int Mana { get => (int)intellect * 4;  set => intellect = value; }
 
         internal virtual int Armor { get => (int)agility / 2; set => agility = value; }
         internal virtual int MageArmor { get => (int)intellect / 2; set => intellect = value; }
@@ -95,7 +95,7 @@ namespace Heroes_and_NoobCo
     }
     class Knight : Hero
     {
-        internal override int HealthRate { get => (int)Health * 4 + 15; set => Health = value; }
+        internal override int HealthRate { get => (int)health * 4 + 15; set => health = value; }
         internal override int Power  { get => power + 2; set => power = value; }
         internal override int Armor { get => ((int)agility / 2) + 2; set => agility = value; }
         internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Sword(); }
@@ -120,7 +120,7 @@ namespace Heroes_and_NoobCo
     {
         internal override int Intellect { get => intellect + 5; set => intellect = value; }
         internal override int Mana { get => (int)(intellect + 5) * 4 + 25; set => intellect = value; }
-        internal override int MageArmor { get => (((int)(intellect + 5)) / 2) + 2; set => Intellect = value; }
+        internal override int MageArmor { get => (((int)(intellect + 5)) / 2) + 2; set => intellect = value; }
         internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Staff(); }
         internal override Cast Cast { get => base.Cast; set => base.Cast = new Cast(); }
         public Mage(int power, int agility, int health, int intellect, string name) :
