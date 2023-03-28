@@ -20,6 +20,7 @@ namespace Heroes_and_NoobCo
                 Console.WriteLine(ex.ToString());
                 return;
             }
+ // Создаём два списка с героями и врагами
             List<Hero> heroes = new List<Hero>();
             while (true)
             {
@@ -97,6 +98,7 @@ namespace Heroes_and_NoobCo
             }
             PrintFight(heroes, enemies);
         }        
+        //Возвращает строковое представление типа персонажа, для логов
         private static string ReturnType (Hero hero)
         {
             try
@@ -114,6 +116,7 @@ namespace Heroes_and_NoobCo
                 return e.Message;
             }
         }
+        //Расчёт физического урона после прохода брони
         private static int ClearDamage(Hero atacker, Hero defender)
         {
             int damage = atacker.Weapon.FullDamage - (defender.Armor + defender.Agility);
@@ -126,6 +129,7 @@ namespace Heroes_and_NoobCo
                 return 0;
             }
         }
+        //Расчёт магического урона после прохода брони
         private static int ClearMagicDamage(Hero mageatacker, Hero defender)
         {
             int damage = mageatacker.Cast.FullDamage - (defender.MageArmor + defender.Intellect);
@@ -138,6 +142,7 @@ namespace Heroes_and_NoobCo
                 return 0;
             }
         }
+        //Магическая атака
         private static void MagicCast (Hero atacker, List<Hero> defenders)
         {
             foreach (Hero defender in defenders)
@@ -158,7 +163,8 @@ namespace Heroes_and_NoobCo
             }
             atacker.currentmana -= 40;
         }
-        private static void Shot (Hero atacker, Hero defender, ref bool flag)
+        //Атака оружием
+        private static void Shot (Hero atacker, Hero defender)
         {
             defender.currenthealth -= ClearDamage(atacker, defender);
             if (defender.currenthealth < 0)
@@ -172,9 +178,9 @@ namespace Heroes_and_NoobCo
             if (defender.currenthealth == 0)
             {
                 Console.WriteLine("{0} {1} is defeated!", ReturnType(defender), defender.Name);
-                flag = true;
             }
         }
+        //Возвращает индекс персонажа из списка, которого будут атаковать
         private static int ReturnTargetIndex (List<Hero> fighters)
         {
             List<int> stats = new List<int>();
@@ -184,9 +190,9 @@ namespace Heroes_and_NoobCo
             }
             return stats.IndexOf(stats.Min());
         }
+        //Ход команды. По его завершении убираются убитые персонажи
         private static void HeroesKick (ref List<Hero> heroes, ref List<Hero> enemies)
         {
-            bool flag = false;
             foreach (Hero hero in heroes)
             {
                 if (enemies.Count == 0)
@@ -208,14 +214,15 @@ namespace Heroes_and_NoobCo
                 }
                 else
                 {
-                    Shot(hero, enemies[targetindex], ref flag);
-                    if (flag)
+                    Shot(hero, enemies[targetindex]);
+                    if (enemies[targetindex].currenthealth == 0)
                     {
                         enemies.RemoveAt(targetindex);
                     }                    
                 }
             }
         }
+        //Печатает лог боя до тех пор пока в одной из команд не будет .Count = 0
         private static void PrintFight (List<Hero> heroes, List<Hero> enemies)
         {
             StringBuilder stringBuilder = new StringBuilder();
