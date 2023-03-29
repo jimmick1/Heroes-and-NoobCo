@@ -72,33 +72,33 @@ namespace Heroes_and_NoobCo
         internal virtual int Mana { get => (int)intellect * 4;  set => intellect = value; }
 
         internal virtual int Armor { get => (int)agility / 2; set => agility = value; }
-        internal virtual int MageArmor { get => (int)intellect / 2; set => intellect = value; }
-        
+        internal virtual int MageArmor { get => (int)intellect / 2; set => agility = value; }
+
         internal virtual Cast Cast { get => cast; set => cast = value; }
         internal virtual Weapon Weapon { get => weapon; set => weapon = value; }
         internal int currenthealth;
         internal int currentmana;
         public Hero (int power, int agility, int health, int intellect, string name)
         {
-            this.Power = power;
-            this.Health = health;
-            this.Name = name;
-            this.Agility = agility;
-            this.Intellect = intellect;
-            this.HealthRate = Health;
-            this.Mana = intellect;
-            this.Armor = agility;
-            this.MageArmor = intellect;
-            this.Weapon = weapon;
-            this.Cast = cast;
-            this.currenthealth = HealthRate;
-            this.currentmana = Mana;
+            Power = power;
+            Health = health;
+            Name = name;
+            Agility = agility;
+            Intellect = intellect;
+            HealthRate = health;
+            Mana = intellect;
+            Armor = agility;
+            MageArmor = intellect;
+            Weapon = weapon;
+            Cast = cast;
+            currenthealth = HealthRate;
+            currentmana = Mana;
         }
     }
     class Knight : Hero
     {
         internal override int HealthRate { get => (int)health * 4 + 15; set => health = value; }
-        internal override int Power  { get => power + 2; set => power = value; }
+        internal override int Power  { get => (int)power + 2; set => power = value; }
         internal override int Armor { get => ((int)agility / 2) + 2; set => agility = value; }
         internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Sword(); }
 
@@ -110,7 +110,8 @@ namespace Heroes_and_NoobCo
     }
     class Thief : Hero
     {
-        internal override int Agility { get => agility + 2; set => agility = value; }
+        internal override int Agility { get => (int)agility + 3; set => agility = value; }
+        internal override int Armor { get => ((int)agility + 3) / 2; set => agility = value; }
         internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Dagger(); }
         public Thief(int power, int agility, int health, int intellect, string name) :
             base(power, agility, health, intellect, name)
@@ -120,9 +121,9 @@ namespace Heroes_and_NoobCo
     }
     class Mage : Hero
     {
-        internal override int Intellect { get => intellect + 5; set => intellect = value; }
-        internal override int Mana { get => (int)(intellect + 5) * 4 + 25; set => intellect = value; }
-        internal override int MageArmor { get => (((int)(intellect + 5)) / 2) + 2; set => intellect = value; }
+        internal override int Intellect { get => (int)intellect + 5; set => intellect = value; }
+        internal override int Mana { get => ((int)intellect + 5) * 4 + 25; set => intellect = value; }
+        internal override int MageArmor { get => ((int)intellect + 5) / 2 + 2; set => intellect = value; }
         internal override Weapon Weapon { get => base.Weapon; set => base.Weapon = new Staff(); }
         internal override Cast Cast { get => base.Cast; set => base.Cast = new Cast(); }
         public Mage(int power, int agility, int health, int intellect, string name) :
