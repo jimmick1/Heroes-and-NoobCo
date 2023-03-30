@@ -261,20 +261,16 @@ namespace Heroes_and_NoobCo
                 }
                 stringBuilder.Append(ReturnType(enemies[enemies.Count - 1]) + " " + enemies[enemies.Count - 1].Name + ".").AppendLine();
             } 
-            if (heroes.Count > 1 || enemies.Count > 1)
-            {
-                if (heroes.Count == 1)
-                {
-                    stringBuilder.Append(ReturnType(heroes[0]) + " " + heroes[0].Name);
-                }
-                else
-                {
-                    for (int i = 0; i < heroes.Count - 1; i++)
+            if (heroes.Count > 1)
+            {               
+                
+                for (int i = 0; i < heroes.Count - 1; i++)
                     {
                         stringBuilder.Append(ReturnType(heroes[i]) + " " + heroes[i].Name + ", ");
                     }
-                    stringBuilder.Append(ReturnType(heroes[heroes.Count - 1]) + " " + heroes[heroes.Count - 1].Name + " ");
-                }
+                    
+                stringBuilder.Append(ReturnType(heroes[heroes.Count - 1]) + " " + heroes[heroes.Count - 1].Name + " ");
+                
                 stringBuilder.Append("engaged the ");
                 if (enemies.Count == 1)
                 {
@@ -295,13 +291,13 @@ namespace Heroes_and_NoobCo
                 HeroesKick(ref heroes, ref enemies);               
                 if (enemies.Count == 0)
                 {
-                    Console.WriteLine("Congratulations!");
+                    Console.Write("Congratulations!");
                     break;
                 }
                 HeroesKick(ref enemies, ref heroes);
                 if (heroes.Count == 0)
                 {
-                    Console.WriteLine(defeatcase);
+                    Console.Write(defeatcase);
                     break;
                 }
             }            
